@@ -24,7 +24,6 @@ De focus ligt op het leveren van een **volledig werkende, foutloze backendapplic
 - **Swagger/OpenAPI-documentatie** moet volledig zijn en toegankelijk in de applicatie:
     - alle endpoints gedocumenteerd;
     - welke endpoints beveiligd zijn en voor welke rollen toegankelijk;
-    - voorbeeldrequests en -responses.
 
 ### 4️⃣ Security
 - De applicatie moet beveiligd zijn met **Dex/OIDC** en **minstens twee rollen**.
@@ -55,14 +54,15 @@ De focus ligt op het leveren van een **volledig werkende, foutloze backendapplic
 - Deze presentatie en bevraging **tellen mee** bij de eindscore.
 
 ### 9️⃣ Puntenverdeling (indicatief)
-| Onderdeel | Gewicht |
-|-----------|---------|
-| Functionele werking en CRUD | 30% |
-| Security en rollenbeheer | 15% |
-| Testen (unit tests + beveiliging) | 20% |
-| REST API & Swagger-documentatie | 15% |
-| Profielen & configuratie | 10% |
-| Clean code & codekwaliteit | 10% |
-| Mondelinge verdediging | 10% |
+| Onderdeel                         | Gewicht |
+|-----------------------------------|---------|
+| Functionele werking         | 20%     |
+| REST API                          | 20%     |
+| Security en rollenbeheer          | 15%     |
+| Testen (unit tests + beveiliging) | 20%     |
+| Swagger-documentatie              | 5%      |
+| Profielen & configuratie          | 5%      |
+| Clean code & codekwaliteit        | 5%      |
+| Mondelinge verdediging            | 10%     |
 
 > 💡 Tip: focus niet alleen op het “werkend krijgen” van je applicatie, maar ook op **kwaliteit, testbaarheid en documentatie**. Dit helpt je om maximale punten te scoren en maakt de evaluatie overzichtelijker.

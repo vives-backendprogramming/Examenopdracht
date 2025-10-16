@@ -183,6 +183,6 @@ Een template wordt hiervoor nog aangeleverd.
 - Het project moet vóór de opgegeven deadline **volledig** op je GitHub repository staan.
 - Controleer dat alle vereiste bestanden aanwezig zijn en dat de README up-to-date is.
 
-## 💯 Evaluatie
+## 🏆 Evaluatie
 
 [EVALUATIE.md](EVALUATIE.md)

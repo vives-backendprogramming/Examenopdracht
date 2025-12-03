@@ -1,6 +1,6 @@
 ## 🏆 Evaluatie
 
-De ingediende code wordt volledig **geëvalueerd** en moet door de student zelf zijn geschreven.  
+Alle ingediende code wordt volledig **geëvalueerd** en moet door de student zelf zijn geschreven.  
 De focus ligt op het leveren van een **volledig werkende, foutloze backendapplicatie** die voldoet aan alle functionele en niet-functionele vereisten.
 
 ### 1️⃣ Functionele werking
@@ -26,7 +26,7 @@ De focus ligt op het leveren van een **volledig werkende, foutloze backendapplic
     - welke endpoints beveiligd zijn en voor welke rollen toegankelijk;
 
 ### 4️⃣ Security
-- De applicatie moet beveiligd zijn met **Dex/OIDC** en **minstens twee rollen**.
+- De applicatie moet beveiligd zijn met **JWT** of **Dex/OIDC** en **minstens twee rollen**.
 - Security wordt geëvalueerd op:
     - correcte implementatie van authenticatie en autorisatie;
     - correcte rolgebaseerde toegang tot endpoints;

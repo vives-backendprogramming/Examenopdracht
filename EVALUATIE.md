@@ -47,22 +47,13 @@ De focus ligt op het leveren van een **volledig werkende, foutloze backendapplic
 - De applicatie moet probleemloos **gebuild** kunnen worden (`BUILD SUCCESS`) en starten in een ontwikkelomgeving.
 
 ### 8️⃣ Mondelinge verdediging
-- Tijdens de mondelinge verdediging wordt verwacht dat je:
-    - je applicatie **demonstratief** presenteert;
-    - je ontwerpkeuzes in domeinmodel, architectuur, security en profielen **toelicht en verdedigt**;
-    - vragen over testing, REST API en codekwaliteit beantwoordt.
-- Deze presentatie en bevraging **tellen mee** bij de eindscore.
+Tijdens het mondeling examen wordt geëvalueerd in welke mate je jouw applicatie kunt toelichten en verdedigen. 
 
-### 9️⃣ Puntenverdeling (indicatief)
-| Onderdeel                         | Gewicht |
-|-----------------------------------|---------|
-| Functionele werking               | 30%     |
-| REST API en documentatie          | 15%     |
-| Security en rollenbeheer          | 15%     |
-| Testen (unit tests + beveiliging) | 20%     |
-| Profielen & configuratie          | 5%      |
-| Clean code & codekwaliteit        | 5%      |
-| Mondelinge verdediging            | 10%     |
+Je moet kunnen uitleggen hoe de verschillende onderdelen van je applicatie werken, welke technische keuzes je hebt gemaakt, hoe de code is opgebouwd en hoe de belangrijkste functionaliteiten werden geïmplementeerd. Je kan je ontwerpkeuzes in domeinmodel, architectuur, security, integratie, ... toelichten en verdedigen. 
+ 
+Het is hierbij niet voldoende dat de applicatie correct functioneert. Je moet ook kunnen aantonen dat je de ingediende code begrijpt en zelfstandig kunt verklaren. Dit geldt eveneens voor code die met behulp van AI-tools, online bronnen of andere hulpmiddelen tot stand is gekomen. Wanneer je niet in staat bent om essentiële onderdelen van je eigen project toe te lichten of vragen over de implementatie te beantwoorden, kan dit erop wijzen dat je de gebruikte oplossing niet zelf begrijpt of zelfstandig hebt uitgewerkt.
+In dat geval kun je, ongeacht de kwaliteit van de ingediende applicatie en code, geen voldoende behalen voor deze opdracht. 
+ 
+Een werkende applicatie alleen is immers onvoldoende bewijs van de vereiste competenties; je moet ook kunnen aantonen dat je de gebruikte technieken begrijpt en zelfstandig kunt toepassen.
 
-> 💡 Tip: focus niet alleen op het “werkend krijgen” van je applicatie, maar ook op **kwaliteit, testbaarheid en documentatie**. Dit helpt je om maximale punten te scoren en maakt de evaluatie overzichtelijker.
 

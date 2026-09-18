@@ -67,11 +67,10 @@ De applicatie beheert zelf de gebruikersnamen en versleutelde wachtwoorden, en v
 Gebruikers loggen in en ontvangen een JWT-token, dat bij elke request wordt meegestuurd.
 De applicatie valideert het token en geeft enkel toegang aan geauthenticeerde gebruikers met de juiste rol.
 
-### 🔐 Indien authenticatie met Dex
-De backendapplicatie maakt gebruik van **Dex** als OIDC-provider.  
-Dex wordt uitgevoerd in een **Docker-container** en beheert de gebruikers, tokens en sessies.  
-De applicatie vertrouwt op Dex om geldige JWT-tokens uit te geven en te verifiëren.  
-De configuratie van Dex bevat de clients, gebruikers en instellingen die nodig zijn om de verbinding met de Spring Boot-applicatie mogelijk te maken.
+### 🔐 Indien authenticatie met OAuth2
+De backendapplicatie maakt gebruik van een OIDC-provider.  
+De OIDC-provider is beschikbaar en beheert de gebruikers, tokens en sessies.  
+De applicatie vertrouwt op de OIDC provider om geldige JWT-tokens uit te geven en te verifiëren.  
 
 ### 👥 Rollen en autorisatie
 In de applicatie zijn **minstens twee gebruikersrollen** voorzien.

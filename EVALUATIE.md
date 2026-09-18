@@ -56,4 +56,4 @@ In dat geval kun je, ongeacht de kwaliteit van de ingediende applicatie en code,
 
 Een werkende applicatie alleen is immers onvoldoende bewijs van de vereiste competenties; je moet ook kunnen aantonen dat je de gebruikte technieken begrijpt en zelfstandig kunt toepassen.
 
->> Een perfect uitgewerkte Java Spring Boot backend is nog maar je ingangsticket tot de mondelinge verdediging
+> Een perfect uitgewerkte Java Spring Boot backend is nog maar je ingangsticket tot de mondelinge verdediging

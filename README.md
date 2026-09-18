@@ -129,7 +129,7 @@ Elk profiel vertegenwoordigt een **afzonderlijke runtime-omgeving**.
 
 ### 🐳 Docker en containerisatie
 
-De volledige applicatie kan worden uitgevoerd in **Docker-containers**, inclusief de backend, de database en eventueel de Dex identity provider.  
+De volledige applicatie kan worden uitgevoerd in **Docker-containers**, inclusief de backend, de database en eventueel de identity provider.  
 Het doel is dat de volledige stack eenvoudig kan worden gedeployed en getest, met alle componenten gescheiden maar verbonden via een Docker-netwerk.
 
 ### ☁️ Clouddeploy

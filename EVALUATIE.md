@@ -26,7 +26,7 @@ De focus ligt op het leveren van een **volledig werkende, foutloze backendapplic
     - welke endpoints beveiligd zijn en voor welke rollen toegankelijk;
 
 ### 4️⃣ Security
-- De applicatie moet beveiligd zijn met **JWT** of **Dex/OIDC** en **minstens twee rollen**.
+- De applicatie moet beveiligd zijn en beschikt over **minstens twee rollen**.
 - Security wordt geëvalueerd op:
     - correcte implementatie van authenticatie en autorisatie;
     - correcte rolgebaseerde toegang tot endpoints;
@@ -53,7 +53,7 @@ Je moet kunnen uitleggen hoe de verschillende onderdelen van je applicatie werke
  
 Het is hierbij niet voldoende dat de applicatie correct functioneert. Je moet ook kunnen aantonen dat je de ingediende code begrijpt en zelfstandig kunt verklaren. Dit geldt eveneens voor code die met behulp van AI-tools, online bronnen of andere hulpmiddelen tot stand is gekomen. Wanneer je niet in staat bent om essentiële onderdelen van je eigen project toe te lichten of vragen over de implementatie te beantwoorden, kan dit erop wijzen dat je de gebruikte oplossing niet zelf begrijpt of zelfstandig hebt uitgewerkt.
 In dat geval kun je, ongeacht de kwaliteit van de ingediende applicatie en code, geen voldoende behalen voor deze opdracht. 
- 
+
 Een werkende applicatie alleen is immers onvoldoende bewijs van de vereiste competenties; je moet ook kunnen aantonen dat je de gebruikte technieken begrijpt en zelfstandig kunt toepassen.
 
-
+>> Een perfect uitgewerkte Java Spring Boot backend is nog maar je ingangsticket tot de mondelinge verdediging

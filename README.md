@@ -1,7 +1,7 @@
 # 🎓 Examenopdracht: Spring Boot Backend
 
 ## 🧾 Opdrachtomschrijving
-Ontwikkel een **backendapplicatie** met behulp van **Spring Boot 3** en **Java 25** die een **REST API** voorziet voor een mobiele app.  
+Ontwikkel een **backendapplicatie** met behulp van **Spring Boot 4** en **Java 25** die een **REST API** voorziet voor een mobiele app.  
 De ontwikkelde REST API zal dienen als **backend** voor de mobiele applicatie die je (eventueel) ontwikkelt binnen het vak **Cross-Platform Development**.
 
 Je krijgt **veel vrijheid** bij het uitwerken van deze opdracht.  

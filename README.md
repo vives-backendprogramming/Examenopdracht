@@ -59,7 +59,7 @@ Beveiliging vormt een essentieel onderdeel van de backendapplicatie.
 
 De authenticatie en autorisatie gebeuren
 - of met behulp van **JWT** 
-- of via **OAuth2** met **OpenID Connect (OIDC)**, waarbij gebruik wordt gemaakt van **Dex** als identity provider.
+- of via **OAuth2** 
 
 ### 🔐 Indien authenticatie met JWT
 De backendapplicatie maakt gebruik van **JWT** voor authenticatie en autorisatie.

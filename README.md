@@ -4,6 +4,8 @@
 Ontwikkel een **backendapplicatie** met behulp van **Spring Boot 4** en **Java 25** die een **REST API** voorziet voor een mobiele app.  
 De ontwikkelde REST API zal dienen als **backend** voor de mobiele applicatie die je (eventueel) ontwikkelt binnen het vak **Cross-Platform Development**.
 
+De opdracht bouwt verder op de technieken uit de cursus [spring-boot-backend-course](https://github.com/vives-backendprogramming/spring-boot-backend-course).
+
 Je krijgt **veel vrijheid** bij het uitwerken van deze opdracht.  
 Zo bepaal je zelf:
 - hoe het **domeinmodel** van je backend (en bij uitbreiding je mobiele app) eruitziet;
@@ -38,7 +40,7 @@ Alle endpoints moeten voldoen aan de standaardprincipes van een **REST API**:
 
 ### 🚀 Controllers
 - Je applicatie bevat **minstens 2 controllers**, elk verantwoordelijk voor een specifieke entiteit.
-- De controller die de **één-op-veel**-entiteit beheert, bevat een **volledige CRUD-functionaliteit**:
+- De controller die de entiteit aan de **één-kant** van de één-op-veel-relatie (de parent) beheert, bevat een **volledige CRUD-functionaliteit**:
 
 | Actie | Beschrijving |
 |-------|---------------|
@@ -53,40 +55,45 @@ Alle endpoints moeten voldoen aan de standaardprincipes van een **REST API**:
 ### ✅ Validatie
 Alle **data** die naar de REST API wordt doorgestuurd, moet **server-side gevalideerd** worden.
 
+### 🌍 Externe API
+De backend roept **minstens één externe REST API** aan, en gebruikt die gegevens op een zinvolle manier in het eigen domein (bijv. gegevens opzoeken, aanvullen of importeren).
+- De externe API wordt aangeroepen via een HTTP-client van Spring, bij voorkeur een **declaratieve client** (`@HttpExchange`) of `RestClient`.
+- De configuratie (base URL, eventuele API-key, …) staat in de configuratie, niet hardcoded in de code. Een API-key of ander geheim komt **niet** in de GitHub-repository terecht.
+- Er zijn **timeouts** ingesteld (connect en read).
+- Fouten van de externe API worden netjes afgehandeld en vertaald naar eigen exceptions en correcte HTTP-statuscodes, bijvoorbeeld:
+    - `422 Unprocessable Content` wanneer de externe API onbruikbare of onvolledige gegevens teruggeeft;
+    - `502 Bad Gateway` wanneer de externe API niet bereikbaar is of zelf een fout teruggeeft.
+
 ## 🔒 Security
 
 Beveiliging vormt een essentieel onderdeel van de backendapplicatie.  
 
-De authenticatie en autorisatie gebeuren
-- of met behulp van **JWT** 
-- of via **OAuth2** 
+### 🔐 Authenticatie met JWT
+De authenticatie en autorisatie gebeuren met **JWT** (JSON Web Token). Er wordt **geen externe identity provider** (OAuth2/OIDC) gebruikt.
 
-### 🔐 Indien authenticatie met JWT
-De backendapplicatie maakt gebruik van **JWT** voor authenticatie en autorisatie.
-De applicatie beheert zelf de gebruikersnamen en versleutelde wachtwoorden, en voorziet eigen authenticatie-endpoints voor login en registratie.
-Gebruikers loggen in en ontvangen een JWT-token, dat bij elke request wordt meegestuurd.
-De applicatie valideert het token en geeft enkel toegang aan geauthenticeerde gebruikers met de juiste rol.
-
-### 🔐 Indien authenticatie met OAuth2
-De backendapplicatie maakt gebruik van een OIDC-provider.  
-De OIDC-provider is beschikbaar en beheert de gebruikers, tokens en sessies.  
-De applicatie vertrouwt op de OIDC provider om geldige JWT-tokens uit te geven en te verifiëren.  
+- De applicatie beheert zelf de gebruikers: gebruikersnamen en wachtwoorden worden in de database bewaard, de wachtwoorden **versleuteld met BCrypt** (nooit in plain text).
+- De applicatie voorziet eigen authenticatie-endpoints voor **registratie** en **login**.
+- Na een geslaagde login ontvangt de gebruiker een JWT, dat bij elke request wordt meegestuurd in de header `Authorization: Bearer <token>`.
+- De applicatie valideert het token (handtekening en vervaldatum) en geeft enkel toegang aan geauthenticeerde gebruikers met de juiste rol.
+- De geheime sleutel en de geldigheidsduur van het token staan in de configuratie, niet hardcoded in de code.
 
 ### 👥 Rollen en autorisatie
 In de applicatie zijn **minstens twee gebruikersrollen** voorzien.
-Deze rollen worden opgenomen in het JWT-token dat aan de backend wordt doorgestuurd.  
+Deze rollen worden opgenomen in het JWT dat aan de backend wordt doorgestuurd.  
 Op basis van deze rollen worden endpoints afgeschermd in de applicatie.
 
 Sommige endpoints zijn enkel toegankelijk voor gebruikers met een specifieke rol.  
 Andere endpoints zijn afgeschermd en enkel beschikbaar voor een andere rol.
 
-Voor beide rollen moet er een **standaardgebruiker** voorzien zijn met wachtwoord. 
+Voor beide rollen moet er een **standaardgebruiker** met wachtwoord voorzien zijn, die bij het opstarten van de applicatie in de database aanwezig is.
 Deze standaardgebruikers en hun bijhorende inloggegevens moeten **beschreven worden in de README** van je project, zodat tijdens evaluatie eenvoudig kan ingelogd worden.
 
 ### 🔑 Beveiligde endpoints
 De beveiliging van de endpoints wordt gerealiseerd via **Spring Security**.  
-Er wordt gecontroleerd of een gebruiker geauthenticeerd is en of hij over de juiste rol beschikt om een bepaalde actie uit te voeren.  
-De applicatie geeft correcte HTTP-statuscodes terug bij niet-geautoriseerde of niet-geauthenticeerde requests.
+Er wordt gecontroleerd of een gebruiker geauthenticeerd is en of die gebruiker over de juiste rol beschikt om een bepaalde actie uit te voeren.  
+De applicatie geeft correcte HTTP-statuscodes terug:
+- `401 Unauthorized` bij een ontbrekend, ongeldig of verlopen token, en bij een mislukte login;
+- `403 Forbidden` wanneer een geauthenticeerde gebruiker niet over de vereiste rol beschikt.
 
 Alle endpoints moeten correct omgaan met toegangsrechten, tokens en foutscenario’s, zodat de applicatie veilig en betrouwbaar blijft.
 
@@ -95,16 +102,17 @@ Alle endpoints moeten correct omgaan met toegangsrechten, tokens en foutscenario
 Naast de functionele vereisten moet je backend ook aan volgende **technische criteria** voldoen.
 
 ### 🧩 Testen
-- De **controller-laag** (REST API-functionaliteit) wordt **uitvoerig getest** met **unittests**.  
+- De **controller-laag** (REST API-functionaliteit) wordt **uitvoerig getest**, bijvoorbeeld met `@WebMvcTest`.  
   Hierbij test je zowel:
     - het **verwachte gedrag** (happy flow);
     - als **mogelijke foutscenario’s** (error handling, edge cases, …).
-- Alle **niet-standaard databasequeries** in de **repository-laag** worden eveneens uitgebreid getest via unittests.
+- Alle **niet-standaard databasequeries** in de **repository-laag** (eigen query methods, `@Query`, …) worden eveneens uitgebreid getest, bijvoorbeeld met `@DataJpaTest`.
+- De **client voor de externe API** wordt getest zonder de echte externe API aan te roepen, bijvoorbeeld met `@RestClientTest`, zowel voor een geslaagde call als voor de foutscenario's.
 - De **beveiligde endpoints** worden getest om na te gaan of:
     - enkel geauthenticeerde gebruikers toegang krijgen;
     - enkel gebruikers met de juiste rol bepaalde acties kunnen uitvoeren;
     - foutieve of ontbrekende tokens correct leiden tot `401 Unauthorized` of `403 Forbidden` responses.
-- Voor elke testbare component wordt het verwachte gedrag gedocumenteerd en gevalideerd.
+- Elke test maakt via een duidelijke naam (of `@DisplayName`) duidelijk welk gedrag getest wordt, en controleert dat gedrag met assertions.
 
 ### 📘 API-documentatie
 - De volledige REST API wordt **gedocumenteerd met Swagger** (OpenAPI).  
@@ -129,7 +137,7 @@ Elk profiel vertegenwoordigt een **afzonderlijke runtime-omgeving**.
 
 ### 🐳 Docker en containerisatie
 
-De volledige applicatie kan worden uitgevoerd in **Docker-containers**, inclusief de backend, de database en eventueel de identity provider.  
+De volledige applicatie kan worden uitgevoerd in **Docker-containers**, inclusief de backend en de database.  
 Het doel is dat de volledige stack eenvoudig kan worden gedeployed en getest, met alle componenten gescheiden maar verbonden via een Docker-netwerk.
 
 ### ☁️ Clouddeploy
@@ -154,7 +162,7 @@ Een template wordt hiervoor nog aangeleverd.
 
 ### 4. Testen en documentatie
 - Zorg dat de **Swagger-documentatie** beschikbaar is en de endpoints correct beschrijft.
-- Alle unit tests moeten foutloos runnen
+- Alle tests moeten foutloos runnen.
 
 ### 5. Deadline
 - Je vindt de deadline terug op Toledo.

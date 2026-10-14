@@ -6,15 +6,15 @@ De focus ligt op het leveren van een **volledig werkende, foutloze backendapplic
 ### 1️⃣ Functionele werking
 - De backendapplicatie moet **volledig operationeel** zijn:
     - de applicatie start probleemloos op in de ontwikkelomgeving;
-    - alle endpoints functioneren correct, inclusief CRUD-operaties, filtering en security;
-    - er mogen **geen 5xx-fouten** optreden tijdens gebruik.
+    - alle endpoints functioneren correct, inclusief CRUD-operaties, filtering, security en de integratie met de externe API;
+    - er mogen **geen 5xx-fouten** optreden tijdens gebruik. Enige uitzondering is een `502 Bad Gateway` wanneer de externe API effectief onbereikbaar is of een fout teruggeeft.
 - Functionaliteit die **onvolledig** is of waarbij 5xx-fouten optreden, levert maximaal **50% van de punten** voor die specifieke feature op.
 
 ### 2️⃣ Testen
-- **Unit tests** zijn verplicht voor alle controllers en repository-methodes.
+- **Tests** zijn verplicht voor alle controllers, voor alle niet-standaard repository-queries en voor de client van de externe API.
 - Een endpoint dat niet volledig getest is, wordt als **half afgewerkt** beschouwd; dit betekent maximaal **50% van de punten** voor dat endpoint.
 - Tests moeten zowel **happy flows** als **error/edge cases** afdekken.
-- Beveiligde endpoints (authenticatie en autorisatie) moeten getest zijn op correcte toegang voor verschillende rollen.
+- Beveiligde endpoints (authenticatie en autorisatie) moeten getest zijn op correcte toegang voor verschillende rollen, inclusief `401`- en `403`-responses.
 
 ### 3️⃣ REST API en documentatie
 - De REST API moet **conform de best practices** van HTTP en REST zijn:
@@ -28,7 +28,8 @@ De focus ligt op het leveren van een **volledig werkende, foutloze backendapplic
 ### 4️⃣ Security
 - De applicatie moet beveiligd zijn en beschikt over **minstens twee rollen**.
 - Security wordt geëvalueerd op:
-    - correcte implementatie van authenticatie en autorisatie;
+    - correcte implementatie van authenticatie en autorisatie met JWT;
+    - veilige opslag van wachtwoorden (BCrypt);
     - correcte rolgebaseerde toegang tot endpoints;
     - aanwezigheid van **standaardgebruikers** voor beide rollen.
 

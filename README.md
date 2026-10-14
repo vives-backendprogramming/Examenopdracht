@@ -23,7 +23,8 @@ Alle endpoints moeten voldoen aan de standaardprincipes van een **REST API**:
 - Gebruik van de correcte **HTTP-methodes** (`GET`, `POST`, `PUT`, `DELETE`, …)
 - Duidelijke en consistente **naamgeving** van de endpoints
 - Correct gebruik van **HTTP-statuscodes**
-- Correct gebruik van **headers**, **queryparameters** en **request-objecten**
+- Correct gebruik van **headers** (bijv. een `Location`-header bij `201 Created`), **queryparameters** en **request-objecten**
+- **Paginering** van lijsten is optioneel: je bepaalt zelf of dit zinvol is voor je domein.
 
 ### 🧩 Domeinmodel
 - Het domeinmodel bevat **minstens 3 entiteiten**.
@@ -33,10 +34,11 @@ Alle endpoints moeten voldoen aan de standaardprincipes van een **REST API**:
 ### 💾 Persistentie
 - De entiteiten worden **gepersisteerd** 
 - Je kiest zelf het type database (**relationeel** of **non-relationeel**) en de gebruikte persistentietechnologie (bijv. JPA, JDBC, MongoDB, ...).
-- Op je productie-omgeving gebeurt je persistentie **on disk**, voor de ontwikkelomgeving mag dit **in-memory** zijn (hoeft niet)
+- Op je productieomgeving gebeurt je persistentie **on disk**, voor de ontwikkelomgeving mag dit **in-memory** zijn (zie **Profielen**).
 
 ### 🧱 Architectuur
 - De applicatie wordt opgedeeld in **verschillende lagen** (bijv. controller, service, repository, model, …).
+- Entities worden **niet rechtstreeks** via de REST API blootgesteld: de API werkt met **request- en response-DTO's**. De business logica en transacties zitten in de **service-laag**.
 
 ### 🚀 Controllers
 - Je applicatie bevat **minstens 2 controllers**, elk verantwoordelijk voor een specifieke entiteit.
@@ -54,6 +56,11 @@ Alle endpoints moeten voldoen aan de standaardprincipes van een **REST API**:
 
 ### ✅ Validatie
 Alle **data** die naar de REST API wordt doorgestuurd, moet **server-side gevalideerd** worden.
+
+Fouten worden centraal afgehandeld en teruggegeven in een **consistent formaat** (bijv. `ProblemDetail`):
+- ongeldige input leidt tot `400 Bad Request`, met vermelding van de foutieve velden;
+- een resource die niet bestaat leidt tot `404 Not Found`;
+- een conflict met bestaande data (bijv. een dubbele unieke waarde) leidt tot `409 Conflict`.
 
 ### 🌍 Externe API
 De backend roept **minstens één externe REST API** aan, en gebruikt die gegevens op een zinvolle manier in het eigen domein (bijv. gegevens opzoeken, aanvullen of importeren).
@@ -73,6 +80,7 @@ De authenticatie en autorisatie gebeuren met **JWT** (JSON Web Token). Er wordt 
 
 - De applicatie beheert zelf de gebruikers: gebruikersnamen en wachtwoorden worden in de database bewaard, de wachtwoorden **versleuteld met BCrypt** (nooit in plain text).
 - De applicatie voorziet eigen authenticatie-endpoints voor **registratie** en **login**.
+- Een gebruiker die zich registreert, krijgt automatisch de **standaardrol** (de rol met de minste rechten). Een gebruiker kan zichzelf nooit een hogere rol (bijv. admin) toekennen.
 - Na een geslaagde login ontvangt de gebruiker een JWT, dat bij elke request wordt meegestuurd in de header `Authorization: Bearer <token>`.
 - De applicatie valideert het token (handtekening en vervaldatum) en geeft enkel toegang aan geauthenticeerde gebruikers met de juiste rol.
 - De geheime sleutel en de geldigheidsduur van het token staan in de configuratie, niet hardcoded in de code.
@@ -112,6 +120,7 @@ Naast de functionele vereisten moet je backend ook aan volgende **technische cri
     - enkel geauthenticeerde gebruikers toegang krijgen;
     - enkel gebruikers met de juiste rol bepaalde acties kunnen uitvoeren;
     - foutieve of ontbrekende tokens correct leiden tot `401 Unauthorized` of `403 Forbidden` responses.
+- De tests draaien zonder extra setup: ze zijn niet afhankelijk van de productiedatabase of van de echte externe API.
 - Elke test maakt via een duidelijke naam (of `@DisplayName`) duidelijk welk gedrag getest wordt, en controleert dat gedrag met assertions.
 
 ### 📘 API-documentatie
@@ -131,7 +140,8 @@ Elk profiel vertegenwoordigt een **afzonderlijke runtime-omgeving**.
   De `prod`-omgeving gebruikt een **aparte productiedatabase** met eigen connectieparameters en gegevens. Deze database is on-disk.
 - De databanken mogen zowel lokaal als in de cloud worden gehost, zolang ze **duidelijk gescheiden** zijn.
 - Het gekozen actieve profiel bepaalt automatisch welke databankverbinding en instellingen worden gebruikt bij het opstarten van de applicatie.
-- De applicatie wordt publiek beschikbaar gesteld voor de mobiele app onder het productie profiel.
+- De applicatie wordt publiek beschikbaar gesteld voor de mobiele app onder het productieprofiel.
+- **Geheimen** (JWT-secret, databasewachtwoord, API-keys, …) worden voor de productieomgeving aangeleverd via **environment variables** en komen niet in de GitHub-repository terecht.
 
 > 💡 Tip: documenteer in de README hoe de profielen worden geactiveerd en hoe de bijhorende databases geconfigureerd zijn, zodat tijdens evaluatie eenvoudig kan overgeschakeld worden tussen `dev` en `prod`.
 
@@ -149,12 +159,10 @@ Het doel is dat de volledige stack eenvoudig kan worden gedeployed en getest, me
 Bij het indienen van je examenproject moet je ervoor zorgen dat alle onderdelen volledig aanwezig zijn. Volg onderstaande richtlijnen zorgvuldig:
 
 ### 1. GitHub repository
-- Het volledige project staat op de GitHub repository die je kreeg voor **Devops & Cloud Computing**
+- Het volledige project staat op de GitHub repository die je kreeg voor **DevOps & Cloud Computing**
 
 ### 2. README.md
-- Het project bevat een README bestand waarin het volledige project beschreven staat, instructies voor het opstarten van de applicatie en de containers, configuratie, eventuele testdata, standaardgebruikers voor beide rollen met wachtwoord, ...
-
-Een template wordt hiervoor nog aangeleverd.
+- Het project bevat een README bestand waarin het volledige project beschreven staat, instructies voor het opstarten van de applicatie en de containers, configuratie, eventuele testdata, standaardgebruikers voor beide rollen met wachtwoord, de publieke URL van de applicatie en van de Swagger UI, ...
 
 ### 3. Docker en containerisatie
 - Voeg een **Docker Compose-configuratie** toe waarmee de volledige stack samen kan worden opgestart.
